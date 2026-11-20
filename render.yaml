@@ -1,0 +1,108 @@
+services:
+  - type: web
+    name: amazon-haul-monitor
+    runtime: python
+    plan: starter
+    region: oregon
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn web_ui:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    disk:
+      name: ahm-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: DATA_DIR
+        value: /var/data
+      - key: KEEPA_API_KEY
+        sync: false
+      - key: UI_PASSWORD
+        sync: false
+      - key: DISCORD_WEBHOOK_50
+        sync: false
+      - key: DISCORD_WEBHOOK_60
+        sync: false
+      - key: DISCORD_WEBHOOK_70
+        sync: false
+      - key: DISCORD_WEBHOOK_80
+        sync: false
+      - key: CHANNEL_ENABLED_50
+        value: "true"
+      - key: CHANNEL_ENABLED_60
+        value: "true"
+      - key: CHANNEL_ENABLED_70
+        value: "true"
+      - key: CHANNEL_ENABLED_80
+        value: "true"
+      - key: KEEPA_DOMAIN
+        value: "1"
+      - key: PRICE_TYPE
+        value: "1"
+      - key: REFERENCE_DAYS
+        value: "90"
+      - key: KEEPA_BATCH_SIZE
+        value: "40"
+      - key: MAX_NEW_KEEPA_LOOKUPS
+        value: "40"
+      - key: KEEPA_CACHE_DAYS
+        value: "7"
+      - key: ROUTE_MODE
+        value: highest
+      - key: POLL_INTERVAL_SEC
+        value: "600"
+      - key: MIN_DISCOUNT
+        value: "50"
+      - key: MAX_DISCOUNT
+        value: "95"
+      - key: ALERT_COOLDOWN_HOURS
+        value: "24"
+      - key: NO_REPEAT_SAME_DAY
+        value: "true"
+      - key: ALLOW_CHEAPER_REPEAT
+        value: "true"
+      - key: MAX_ALERTS_PER_TIER
+        value: "5"
+      - key: MIN_ORIGINAL_PRICE
+        value: "15"
+      - key: MIN_HAUL_PRICE
+        value: "3"
+      - key: MAX_HAUL_PRICE
+        value: "25"
+      - key: MIN_SAVINGS
+        value: "8"
+      - key: MIN_TRACKING_DAYS
+        value: "60"
+      - key: REQUIRE_BRAND
+        value: "true"
+      - key: EXCLUDE_GENERIC_BRAND
+        value: "true"
+      - key: MIN_REVIEW_COUNT
+        value: "0"
+      - key: MIN_RATING
+        value: "0"
+      - key: SELLER_LABEL
+        value: "Haul"
+      - key: CHANNEL_PREFIX
+        value: "Haul"
+      - key: INCLUDE_GRAPH
+        value: "true"
+      - key: HAUL_PAGES
+        value: "2"
+      - key: HAUL_MAX_ITEMS
+        value: "1200"
+      - key: HAUL_REQUEST_DELAY
+        value: "1.2"
+      - key: HAUL_TIMEOUT_SEC
+        value: "45"
+      - key: HAUL_RETRIES
+        value: "2"
+      - key: PROXY_URL
+        sync: false
+      - key: HAUL_KEYWORDS
+        value: "automotive,car accessories,tools,home improvement,electronics,kitchen,office,pet supplies,sports and outdoors,industrial and scientific"
+      - key: EXCLUDE_CATEGORIES
+        value: "7141123011,11055981,283155,133140011,165793011,2617941011,2335752011,468642,2625373011,229534,16310101,165796011,3367581,3290252011,5174"
+      - key: LOG_LEVEL
+        value: "INFO"
